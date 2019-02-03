@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<head>
+    <title>2kindsofcs's first to-do-list</title>
+    <meta charset="UTF-8">
+    <style>
+        .topContainer{
+            background-color: red;
+            padding: 30px 40px;
+            text-align: center;
+        }
+        .topContainer:after {
+            content: "";
+            display: table;
+            clear: both;
+            font-family:'Roboto Condensed', sans-serif;
+        }
+        #title{
+            color: white;
+        }
+        #todoContent{
+            float:left;
+            padding: 10px;
+            border: none;
+            margin: 0;
+            width: 70%;
+            font-size: 16px;
+        }
+        #addButton{
+            font-size: 16px;
+            width: 20%;
+            border: none;
+            margin: 0;
+            float:left;
+            padding: 10px;
+        }
+        ul{
+            margin: 0;
+            padding: 0;
+        }
+        ul li{
+            cursor: pointer;
+            position: relative;
+            padding: 12px 8px 12px 40px;
+            background: #eee;
+            font-size: 18px;
+        }
+        ul li:nth-child(odd){
+            background-color: papayawhip; 
+        }
+        #addButton:hover{
+            background-color:blanchedalmond;
+            transition: 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <div class="topContainer">
+    <h1 id="title">My to do list</h1>
+    <input type="text" id="todoContent" placeholder="Write something to do here!"><span>
+        <button id="addButton">Add</button>
+    </span>
+    </div>
+    <ul id="itemList">
+        <li>make a to-do-list webpage</li>
+    </ul>
+    <script>
+        let addButton = document.getElementById("addButton");
+        let todoContent = document.getElementById("todoContent")
+        let itemlist = document.getElementById("itemList")
+        // 만약 input이 비어있지 않으면, button을 클릭했을 때 input value를 리스트에 추가
+        let addToDo = function () {
+            makeNewItem();
+        }
+        let makeNewItem = function () {
+            if (todoContent.value) {
+                let newitem = document.createElement("li");
+                newitem.textContent = todoContent.value;
+                itemlist.appendChild(newitem);
+                let delbutton = document.createElement("button");
+
+            }
+        }
+        addButton.addEventListener("click", addToDo);
+    </script>
+</body>
