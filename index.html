@@ -107,5 +107,21 @@
             }
         }
         addButton.addEventListener("click", addToDo);
+          //  한 리스트의 delbutton(span)을 누르면 그 span의 바로 부모 element가 삭제되어야 한다. 
+        let removeItem = function (e) {
+            e.parentNode.parentNode.removeChild(e.parentNode);
+        }
+        let delButton = document.getElementsByClassName("delButton");
+        for (let i=0; i<delButton.length; i++) {
+            delButton[i].addEventListener("click", removeItem);      
+        } 
+        // var close = document.getElementsByClassName("close");
+        // var i;
+        // for (i = 0; i < close.length; i++) {
+        //     close[i].onclick = function() {
+        //         var div = this.parentElement;
+        //         div.style.display = "none";
+        //         }
+        //     }
     </script>
 </body>
