@@ -6,13 +6,23 @@ let itemList = document.getElementById("itemList")
 fetch('/todo/all').then(
     response => response.json()
 ).then( (allTodo) =>{
-    allTodo.forEach(element => { createNewItem(element)
+    console.log(allTodo);
+    allTodo.forEach(element => { 
+        createNewItem(element.title, element.done)
     });
 })
 
 itemList.addEventListener("click", function(e) {
     if (e.target.tagName === 'LI') {
-        e.target.classList.toggle("checked");
+        let itemIndex = findTodoIndex(e.target);
+        fetch(`/todo/check/${itemIndex}`).then(
+            () => {
+                e.target.classList.toggle("checked");
+            }
+            , () => {
+                return alert("failed");
+            }
+        )
     } 
 })
 let addToDo = function () {
@@ -31,21 +41,26 @@ let addToDo = function () {
 /**
  * @param {MouseEvent} e 
  */
-let removeItem = function (e) {
+
+let findTodoIndex = function (element) {
     let itemIndex;
     let itemTotal = itemList.children;
     const itemCount = itemTotal.length
     for (let i=0; i < itemCount; i++) {
-        if (itemTotal[i] === e.target.parentNode) {
+        if (itemTotal[i] === element) {
             itemIndex = itemCount - i - 1;
-            break
+            return itemIndex
         }
     }
+}
+ 
+let removeItem = function (e) {
+    let itemToRemove = e.target.parentNode
+    let itemIndex = findTodoIndex(itemToRemove);
     fetch(`/todo/remove/${itemIndex}`).then(
         (response) => {
             if (response.ok) { 
-            let todoItem = e.target.parentNode;
-            itemList.removeChild(todoItem);
+            itemList.removeChild(itemToRemove);
         }},
         () => {
             return alert("failed");
@@ -54,7 +69,7 @@ let removeItem = function (e) {
 }     
 addButton.addEventListener("click", addToDo);
 
-function createNewItem(newValue) {
+function createNewItem(newValue, done = false) {
     let newItem = document.createElement("li");
     newItem.textContent = newValue;
     let delButton = document.createElement("span");
@@ -63,4 +78,7 @@ function createNewItem(newValue) {
     newItem.appendChild(delButton);
     itemList.prepend(newItem);
     delButton.addEventListener("click", removeItem);
+    if (done === true) {
+        newItem.className = "checked";
+    }
 }

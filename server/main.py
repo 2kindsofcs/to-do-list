@@ -28,7 +28,7 @@ def showAll():
 
 @app.route('/todo/add/<string:todo>')
 def addTodo(todo):
-    todoList.append(todo)
+    todoList.append({'title': todo, 'done': False})
     return ''
 
 @app.route('/todo/remove/<int:index>')
@@ -37,6 +37,11 @@ def removeTodo(index):
         del todoList[index]
     except IndexError:
         return make_response('404 not found', 404)
+    return ''
+
+@app.route('/todo/check/<int:index>')
+def checkTodo(index):
+    todoList[index]['done'] = not todoList[index]['done']
     return ''
 
 
