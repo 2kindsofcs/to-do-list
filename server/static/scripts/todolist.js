@@ -4,9 +4,9 @@ let todoContent = document.getElementById("todoContent")
 let itemList = document.getElementById("itemList")
 
 fetch('/todo/all').then(
-    response => response.text()
-).then( (listStr) =>{
-    listStr.split(', \n').forEach(element => { createNewItem(element)
+    response => response.json()
+).then( (allTodo) =>{
+    allTodo.forEach(element => { createNewItem(element)
     });
 })
 
@@ -45,6 +45,7 @@ let removeItem = function (e) {
         (response) => {
             if (response.ok) { 
             let todoItem = e.target.parentNode;
+            itemList.removeChild(todoItem);
         }},
         () => {
             return alert("failed");
