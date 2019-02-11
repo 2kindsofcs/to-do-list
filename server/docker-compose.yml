@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+  todolist:
+    build: .
+    labels:
+      traefik.domain: "todolist.2kindsofcs.xyz"
+      traefik.frontend.rule: "Host:todolist.2kindsofcs.xyz"
+      traefik.port: "5000"
+      traefik.protocol: "http"
+      traefik.enable: "true"
+networks:
+  default:
+    external:
+      name: traefik_bridge
